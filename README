@@ -1,2 +1,7 @@
 This is the README file for the hrms project that deals with
 the analysis of high resolution mass spectrometry data.
+
+This code requires a list of name:mz pairs in a csv file. It is
+currently named LipidList.csv
+
+Usage should go here:
