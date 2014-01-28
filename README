@@ -4,4 +4,4 @@ the analysis of high resolution mass spectrometry data.
 This code requires a list of name:mz pairs in a csv file. It is
 currently named LipidList.csv
 
-Usage should go here:
+Usage will go here:
