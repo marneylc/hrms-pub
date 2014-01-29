@@ -87,7 +87,7 @@ peaktable <- function(targets,spectra) {
   signal <- vector(length=length(targets$mz)) #predefine length later
   for (i in 1:length(targets$mz)) {
     target <- targets[i,mz]
-    peak <- peakfind_midpoint(target,spectra,0.01)
+    peak <- peakfind_midpoint(target,spectra,0.01,warnings)
     nearest_mz[i]<-peak[1,mz]
     signal[i]<-peak[1,V1]
   }
@@ -101,7 +101,7 @@ peaktable <- function(targets,spectra) {
 ### This is a refined peak finder that calculates the midpoint between a line drawn at the half height. This ###
 ### will give closer m/z values, but does not correct any small errors in intensity calculations from the ######
 ### peak max finder. Used in main() as of 28/01/2014. -Luke Marney #############################################
-peakfind_midpoint <- function(target,spectra,hwidth) {
+peakfind_midpoint <- function(target,spectra,hwidth,warnings) {
   window <- subset(spectra, spectra$mz > target-hwidth & spectra$mz < target+hwidth)
   if (nrow(window)==0) { # no data for target?
     peak = data.table('mz'=target,'V1'=0) # enter zero intensity for target mass
@@ -144,8 +144,6 @@ peakfind_midpoint <- function(target,spectra,hwidth) {
       peak$mz <- round(midpoint[1], digits=4) # modify the peaks variable with the new more accurate m/z value
     }
   }
-  #zz <- file("warnings.Rout", open="wt") # somehow I want to write all the warnings to a text file!!
-  #sink(zz, type="message", append=TRUE)
   return(peak)
 }
 
