@@ -21,9 +21,16 @@ main <- function(filename,rtwin,mzwin) {
   require(data.table)
   targets <- read.table("./LipidList.csv" , header=T, sep=',')
   targets <- data.table(targets)
+  options("nwarnings" = (length(targets$mz)+50)) # we need to get at least as many warnings as targets
   spectrum <- getspectra(filename=filename, rt=rtwin, mz=mzwin)
   tgts <- peaktable(targets,spectrum)
   write.csv(tgts, file = gsub(pattern=".mzXML", x=filename, replacement=".csv"), row.names=F)
+# writing warnings to a text file isn't working, visit later
+#   txtFile <- file("warnings.txt", "w") # open and write warnings to a file called warnings.txt
+#   warns <- warnings()
+#   for (i in 1:length(warns)) {writeLines(text=as.character(str(warns[i]),list.len=1),con=txtFile, sep="\n")}
+# 
+#   return warns
   #return(tgts) # this is bugy, doesnt return the correct structure for looping function, need to figure out
   # but csv mode works
 }

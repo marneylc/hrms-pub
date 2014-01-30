@@ -1,3 +1,4 @@
+setwd("H:/R/hrms")
 files = list.files(path=".", pattern="*.mzXML")
 source("hrms.R")
 system.time(
