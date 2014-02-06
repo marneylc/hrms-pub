@@ -1,3 +1,4 @@
+# basic input to get file names and run code
 setwd("H:/R/hrms")
 files = list.files(path=".", pattern="*.mzXML")
 source("hrms.R")
@@ -7,7 +8,8 @@ for (i in 1:length(files)) {
 }
 )
 
-
+# when errors occur you can set a few key variables in the various functions and then call them in a for loop
+# instead of by function name
 targets <- read.table("./LipidList.csv" , header=T, sep=',')
 targets <- data.table(targets)
 spectra <- getspectra(filename=files[1], rt=c(0,60), mz=c(200,1800))
@@ -15,6 +17,11 @@ nearest_mz <- vector(length=length(targets$mz)) #predefine length later
 signal <- vector(length=length(targets$mz)) #predefine length later
 hwidth=0.01
 
+
+# this is the peakfind_midpoint function turned into a for loop
+# make sure you copy and past the appropriate lines to reflect the latest
+# code version you are running. This will print the variable i to the 
+# console so that you can see at which target the code failed
 for (i in 1:length(targets$mz)) {
   target <- targets[i,mz]
   print(i)
@@ -66,3 +73,9 @@ for (i in 1:length(targets$mz)) {
 }
 
 i <- 106
+# setting the variable "i" to a particular value and running the code inside the above for loop
+# will let you find the exact line that the error happens
+# very useful is the plotting of the variable window: plot(window)
+# so that you can actually see where the code is looking for the target 
+# peak and why errors might be occurring
+
