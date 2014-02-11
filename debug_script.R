@@ -19,7 +19,7 @@ hwidth=0.01
 
 
 # this is the peakfind_midpoint function turned into a for loop
-# make sure you copy and past the appropriate lines to reflect the latest
+# make sure you copy and paste the appropriate lines to reflect the latest
 # code version you are running. This will print the variable i to the 
 # console so that you can see at which target the code failed
 for (i in 1:length(targets$mz)) {
