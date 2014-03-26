@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 #############################################################################
 ### The target list must be in active directory and called LipidList.csv. ###
 ### To call from within R, execute the following two commands ###############
@@ -165,4 +167,10 @@ peakfind_max <- function(target,spectra,hwidth) {
   peak <- window[length(window$mz)] #get last entry of table for the peak maximum
   #plot(window, type='h', lwd=1)
   return(peak) 
+}
+
+if(!interactive()){
+  args <- commandArgs(trailingOnly = TRUE)
+  f <- args[1]
+  main(f,rtwin=c(0,60),mzwin=c(200,1800))
 }
