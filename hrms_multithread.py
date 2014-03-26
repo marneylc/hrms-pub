@@ -4,7 +4,6 @@ import os
 import sys
 import re
 import time
-start_time = time.time()
 
 def main():
     path = sys.argv[1]
@@ -15,13 +14,13 @@ def main():
 
 # initiates as many threads as maxthreads for the 
 # methods defined in R_threadClass
-def thread_handle(files,path,maxthreads,R_threadclass):
+def thread_handle(files,path,maxthreads,threadclass):
     anchor = range(0,len(files),maxthreads)
     thread_dict = dict()
     for i in anchor:
         files_lim = files[i:i+maxthreads]
     for f in files_lim:
-        thread_dict[f] = R_hrms(f,path)
+        thread_dict[f] = threadclass(f,path)
         #thread = R_hrms(f,path)
     for keys in thread_dict:
         thread_dict[keys].start()
