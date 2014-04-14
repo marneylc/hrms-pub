@@ -36,6 +36,8 @@ The last line will produce the csv files signals and deviations in the active di
 puts multiple file's data together into two csv files plus returns the data.frames in the list 
 variable "results".
 
+If you are attempting to analyze lots of data with this, please checkout lcms.py in marneylc/LCMS_highthroughput for multithreading of both the conversion process and the hrms peak picking.
+
 In the output, a value of "NA" means that no data exists in the mass 
 spectrum for that target peak. A signal value of "0" means that there is
 mass spectral data collected for the target mass, but that it has a signal
