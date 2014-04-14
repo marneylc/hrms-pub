@@ -15,30 +15,35 @@ peaking prior to analysis.
 Usage in R:
 
 To perform analysis for one sample in R, call the following in the console:
-
-> setwd("<path>")
-> source("hrms.R")
-> main(filename,rtwin=c(0,60),mzwin=c(200,1800))
+``` R
+setwd("<path>")
+source("hrms.R")
+main(filename,rtwin=c(0,60),mzwin=c(200,1800))
+```
 
 With <path> being the directory with files hrms.R, LipidList.csv, and mzXML files and where 
 rtwin is the retention time window in sec and mzwin is the mzwindow in m/z units
 
 If you want to run this for all data files in a directory run the following command: 
-
-> files = list.files(".", pattern=".mzXML") # the pattern could be ".mzML" if needed
-> system.time(
-> for (i in 1:length(files)) {
->   main(files[i],rtwin=c(0,60),mzwin=c(200,1800))
-> }
-> )
-> results <- signals_deviations() 
+``` R
+files = list.files(".", pattern=".mzXML") # the pattern could be ".mzML" if needed
+system.time(
+for (i in 1:length(files)) {
+  main(files[i],rtwin=c(0,60),mzwin=c(200,1800))
+}
+)
+results <- signals_deviations() 
+```
 
 The last line will produce the csv files signals and deviations in the active directory, which 
 puts multiple file's data together into two csv files plus returns the data.frames in the list 
 variable "results".
 
-If you are attempting to analyze lots of data with this, please checkout lcms.py in 
+If you are attempting to analyse lots of data with this, please checkout lcms.py in 
 marneylc/LCMS_highthroughput for multithreading of both the conversion process and the hrms peak picking.
+
+The separate file signals_deviations.R is made available so that multiple folders/plates 
+of samples can be collated into a singal "signals.csv" file (and deviations.csv).
 
 In the output, a value of "NA" means that no data exists in the mass 
 spectrum for that target peak. A signal value of "0" means that there is
