@@ -3,7 +3,8 @@ the analysis of high resolution mass spectrometry data.
 
 This code requires a list of name:mz pairs in a csv file. It is
 currently named LipidList.csv on my local machine. An example file should have been 
-distributed with this code. 
+distributed with this code. If you would like a few example mass spectral data files
+go to https://drive.google.com/folderview?id=0B06AQDbcyIg8Q2ZFYm1RNmhnMUE&usp=sharing
 
 You must use proteowizard to convert all raw spectra files to mzXML 
 files. The filname variables refered to in the documentation are these 
