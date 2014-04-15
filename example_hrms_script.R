@@ -38,30 +38,30 @@ detach(coverageDF)
 source("U:/GitHub/hrms/hrms.R")
 library(xcms)
 library(data.table)
-library(stringr)
-setwd("E:/PROMIS/csv_files/PROMIS__001/")
-source("U:/GitHub/hrms/signals_deviations.R")
-results <- signals_deviations()
 
-# prepare signal data from signals_deviations.R output 
-signals <-  read.csv("signals.csv")
-X <- signals[,3:ncol(signals)]
-X <- as.data.frame(t(X))
-m_z <- paste("m_z_", signals[,2], sep="")
-colnames(X) <- gsub("[[:punct:]]", "_", m_z)	# regex search to replace "." with "_" in column names
- 
-# pull out date, lab technician, well number, and sample name for each sample
-newvars <- vector(mode="list",length=length(rownames(X)))
-mrc_date <- vector(mode="list",length=length(rownames(X)))
-mrc_technician <- vector(mode="list",length=length(rownames(X)))
-mrc_samplenum <- vector(mode="list",length=length(rownames(X)))
-mrc_samplename <- vector(mode="list",length=length(rownames(X)))
-for (i in 1:length(rownames(X))) {
-	newvars[[i]] <- as.data.frame(as.list(str_split(rownames(X)[i], "__")))
-	mrc_date[[i]] <- substring(newvars[i,1], first=2, last=9)
-	mrc_technician[[i]] <- newvars[i,2]
-	mrc_samplenum[[i]] <- as.numeric(newvars[i,4])
-	mrc_samplename[[i]] <- gsub(".csv", "", newvars[i,5])
+for(i in 1:2) {
+	setwd(paste("E:/PROMIS/csv_files/PROMIS__00", i, "/", sep=""))
+	source("U:/GitHub/hrms/signals_deviations.R")
+	results <- signals_deviations()
+
+	# prepare signal data from signals_deviations.R output 
+	signals <-  read.csv("signals.csv")
+	X <- signals[,3:ncol(signals)]
+	X <- as.data.frame(t(X))
+	m_z <- paste("m_z_", signals[,2], sep="")
+	colnames(X) <- gsub("[[:punct:]]", "_", m_z)	# regex search to replace "." with "_" in column names
+	 
+	# pull out date, lab technician, sample number, and sample name for each sample
+	newmatrix <- matrix(unlist(strsplit(rownames(X), split = "__")), ncol = 5, byrow = T)
+	mrc_date <- gsub("^X", "", newmatrix[,1])
+	mrc_technician <- newmatrix[,2]
+	mrc_samplenum <- as.numeric(newmatrix[,4])
+	mrc_samplename <- sub(".csv$", "", newmatrix[,5])
+	rownames(X) <- mrc_samplename
+	fileout <- cbind(mrc_samplename, mrc_samplenum, mrc_date, mrc_technician, X)
+
+	# output to csv file
+	setwd("E:/PROMIS/csv_files/")
+	filename <- paste("E:/PROMIS/csv_files/PROMIS__00", i, "_signals.csv", sep="")
+	write.csv(fileout, file=filename, row.names=F)
 }
-rownames(X) <- mrc_samplename
-X <- cbind(mrc_date, mrc_technician, mrc_samplenum, X)
