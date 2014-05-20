@@ -27,6 +27,7 @@ main <- function(filename,rtwin,mzwin) {
   spectrum <- getspectra(filename=filename, rt=rtwin, mz=mzwin)
   tgts <- peaktable(targets,spectrum)
   write.csv(tgts, file = gsub(pattern=".mzXML", x=filename, replacement=".csv"), row.names=F)
+  gc() # helps memory allocation errors on low memory systems
 # writing warnings to a text file isn't working, visit later
 #   txtFile <- file("warnings.txt", "w") # open and write warnings to a file called warnings.txt
 #   warns <- warnings()
