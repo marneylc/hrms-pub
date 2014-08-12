@@ -50,3 +50,16 @@ spectrum for that target peak. A signal value of "0" means that there is
 mass spectral data collected for the target mass, but that it has a signal
 value of zero.
 
+Note:
+somtimes when edited in windows, hrms.R can end up having invisible CR characters
+which causes errors in linux.
+
+If you get a "No such file or directory" error run the following code in python
+
+``` python
+with open('hrms.R', 'rb+') as f:
+    content = f.read()
+    f.seek(0)
+    f.write(content.replace(b'\r', b''))
+    f.truncate()
+```
