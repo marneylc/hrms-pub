@@ -1,5 +1,6 @@
 mz,name
 171.1391,FreeFA(10:0)-H-
+185.1536,FreeFA(11:0)-H- IS***
 185.1544,FreeFA(11:0)-H- IS***
 199.1704,FreeFA(12:0)-H-
 207.1157,FreeFA(10:0)+Cl-
@@ -72,6 +73,7 @@ mz,name
 412.3796,Cer(25:0)-H-
 413.3637,FreeFA(23:0)+AcO-
 424.3797,Cer(26:1)-H- IS**
+424.3785,Cer(26:1)-H- IS**
 425.3636,FreeFA(24:1)+AcO-
 426.3953,Cer(26:0)-H-
 427.3793,FreeFA(24:0)+AcO-
@@ -99,6 +101,7 @@ mz,name
 480.4423,Cer(30:1)-H-
 482.4579,Cer(30:0)-H-
 484.3563,Cer(28:3)+Cl-
+484.3997,Cer(26:1)+Ac- IS**
 484.4008,Cer(26:1)+AcO-
 486.3719,Cer(28:2)+Cl-
 486.4164,Cer(26:0)+AcO-
@@ -1176,6 +1179,7 @@ mz,name
 774.529,PE(34:2)+AcO-_PS(35:1)-H-
 774.6017,PE(38:0)-H-
 774.677,IS
+774.6735,"1,2-di-O-phytanyl-sn-glycero-3-phosphoethanolamine**IS"
 775.4168,PI(27:0)+Cl-
 775.4321,PG(34:5)+Cl-
 775.4403,PI(30:3)-H-
@@ -1185,6 +1189,7 @@ mz,name
 775.5493,PG(36:1)-H-_PA(37:1)+AcO-
 775.5528,SM(37:3)+Cl-
 775.5761,SM(40:6)-H-
+775.596,N-heptadecanoyl-D-erythro-sphingosylphosphorylcholine**IS
 775.5972,SM(35:1)+AcO-
 776.5001,PC(33:3)+Cl-_PE(36:3)+Cl-
 776.5236,PC(36:6)-H-_PE(39:6)-H-
@@ -1555,6 +1560,7 @@ mz,name
 820.5861,PC(39:5)-H-_PE(42:5)-H-
 820.6071,PE(37:0)+AcO-_PC(34:0)+AcO-
 820.683,IS
+820.679,"1,2-di-O-octadecyl-sn-glycero-3-phosphocholine**IS"
 821.5104,PG(37:3)+Cl-
 821.5186,PI(33:1)-H-
 821.5337,PG(40:6)-H-
