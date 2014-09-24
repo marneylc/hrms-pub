@@ -26,7 +26,7 @@ rtwin is the retention time window in sec and mzwin is the mzwindow in m/z units
 
 If you want to run this for all data files in a directory run the following command: 
 ``` R
-files = list.files(".", pattern=".mzXML") # the pattern could be ".mzML" if needed
+files = list.files(".", pattern=".mzXML")
 system.time(
 for (i in 1:length(files)) {
   main(files[i],rtwin=c(0,60),mzwin=c(200,1800))
