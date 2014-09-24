@@ -16,12 +16,12 @@ Usage in R:
 
 To perform analysis for one sample in R, call the following in the console:
 ``` R
-setwd("<path>")
+setwd("path")
 source("hrms.R")
 main(filename,rtwin=c(0,60),mzwin=c(200,1800))
 ```
 
-With <path> being the directory with files hrms.R, LipidList.csv, and mzXML files and where 
+With "path" being the directory with files hrms.R, LipidList.csv, and mzXML files and where 
 rtwin is the retention time window in sec and mzwin is the mzwindow in m/z units
 
 If you want to run this for all data files in a directory run the following command: 
