@@ -4,14 +4,14 @@
 ### The target list must be in active directory and called LipidList.csv. ###
 ### To call from within R, execute the following two commands ###############
 # > source("hrms.R")
-# > main(filename,rtwin=c(0,60),mzwin=c(200,1800)) 
+# > main(filename,rtwin=c(20,70),mzwin=c(200,1000)) 
 # where rtwin is the retention time window in sec and mzwin is the mzwindow in m/z units
 #
 ### If you want to run this for all data files in a directory run the following command after getting
 ### the name of all files into the list variable "files"
 # > system.time( 
 # > for (i in 1:length(files)) { 
-# >   main(files[i],rtwin=c(0,60),mzwin=c(200,1800))
+# >   main(files[i],rtwin=c(20,70),mzwin=c(200,1000))
 # > }
 # >)
 # > results <- signals_deviations() 

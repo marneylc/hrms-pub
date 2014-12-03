@@ -18,7 +18,7 @@ To perform analysis for one sample in R, call the following in the console:
 ``` R
 setwd("path")
 source("hrms.R")
-main(filename,rtwin=c(0,60),mzwin=c(200,1800))
+main(filename,rtwin=c(20,70),mzwin=c(200,1000))
 ```
 
 With "path" being the directory with files hrms.R, LipidList.csv, and mzXML files and where 
@@ -29,7 +29,7 @@ If you want to run this for all data files in a directory run the following comm
 files = list.files(".", pattern=".mzXML")
 system.time(
 for (i in 1:length(files)) {
-  main(files[i],rtwin=c(0,60),mzwin=c(200,1800))
+  main(files[i],rtwin=c(20,70),mzwin=c(200,1000))
 }
 )
 results <- signals_deviations() 
