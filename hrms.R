@@ -173,5 +173,5 @@ peakfind_max <- function(target,spectra,hwidth) {
 if(!interactive()){
   args <- commandArgs(trailingOnly = TRUE)
   f <- args[1]
-  main(f,rtwin=c(0,60),mzwin=c(200,1800))
+  main(f,rtwin=c(20,70),mzwin=c(200,1000))
 }
