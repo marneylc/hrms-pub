@@ -4,7 +4,7 @@
 ### The target list must be in active directory and called LipidList.csv. ###
 ### To call from within R, execute the following two commands ###############
 # > source("hrms.R")
-# > main(filename,lipidlist,rtwin=c(0,60),mzwin=c(200,1800)) 
+# > main(filename,lipidlist,rtwin=c(20,70),mzwin=c(200,1000)) 
 # where rtwin is the retention time window in sec and mzwin is the mzwindow in m/z units
 # lipidlist is the name of the csv file of mz and name pairs
 #
@@ -12,7 +12,7 @@
 ### the name of all files into the list variable "files"
 # > system.time( 
 # > for (i in 1:length(files)) { 
-# >   main(files[i],lipidlist,rtwin=c(0,60),mzwin=c(200,1800))
+# >   main(files[i],lipidlist,rtwin=c(20,70),mzwin=c(200,1000))
 # > }
 # >)
 # > results <- signals_deviations() 
@@ -131,6 +131,7 @@ peakfind_midpoint <- function(target,spectra,hwidth,warnings) {
       setkey(window,V1) #this will sort table by intensity, thus finding peak maximum as last entry in table
       peak <- window[length(window$mz)] #get last entry of table for the peak maximum
       window <- subset(spectra, spectra$mz > peak$mz-hwidth & spectra$mz < peak$mz+hwidth)
+      setkey(window,mz)
       if (window$V1[length(window$mz)] > hh_close | window$V1[1] > hh_close) { # is the bad sampling of peak due to interference?
         setkey(window,V1) #this will sort table by intensity, thus finding peak maximum as last entry in table
         peak <- window[length(window$mz)] #get last entry of table for the peak maximum
@@ -142,11 +143,20 @@ peakfind_midpoint <- function(target,spectra,hwidth,warnings) {
       peak <- window[length(window$mz)] #get last entry of table for the peak maximum
       hh=peak[1,V1]/2
       nearmz=peak[1,mz]
-      left_mzs <- c(max(subset(window, window$mz < nearmz & window$V1 < hh)$mz),min(subset(window, window$mz < nearmz & window$V1 > hh)$mz))
-      left_int <- c(max(subset(window, window$mz < nearmz & window$V1 < hh)$V1),min(subset(window, window$mz < nearmz & window$V1 > hh)$V1))
-      right_mzs <- c(max(subset(window, window$mz > nearmz & window$V1 < hh)$mz),min(subset(window, window$mz > nearmz & window$V1 > hh)$mz))
-      right_int <- c(max(subset(window, window$mz > nearmz & window$V1 < hh)$V1),min(subset(window, window$mz > nearmz & window$V1 > hh)$V1))
-      midpoints <- data.frame(left_mzs,left_int,right_mzs,right_mzs)
+      ### separate left and right side of peak
+      left <- window[window[,mz] <= peak$mz]
+      right <- window[window[,mz] >= peak$mz]
+      left_one <- left[left[,V1] <= hh]; left_one <- left_one[length(left_one[,mz])] # closest point below hh needs to index last entry in table
+      left_two <- left[left[,V1] >= hh][1] # can do an index of 1, because it is sorted by intensity
+      right_one <- right[right[,V1] >= hh][1] # can do an index of 1, because it is sorted by intensity
+      right_two <- right[right[,V1] <= hh]; right_two <- right_two[length(right_two[,mz])] # closest point below hh needs to index last entry in table
+      if (left_two[,mz] == right_one[,mz]) {warning(paste("Same point seen for left and right side of", target, ". Possible undersampled peaks?")) }
+      ### organize data into a data frame (called midpoints) for easier handling
+      left_mzs <- c(left_one[,mz],left_two[,mz])
+      left_int <- c(left_one[,V1],left_two[,V1])
+      right_mzs <- c(right_one[,mz],right_two[,mz])
+      right_int <- c(right_one[,V1],right_two[,V1])
+      midpoints <- data.frame(left_mzs,left_int,right_mzs,right_int)
       ### there has got to be a way to combine the last five rows into one row
       coordinates <- list()
       left <- coefficients(lm(left_int ~ left_mzs, data=midpoints))
@@ -175,5 +185,5 @@ if(!interactive()){
   args <- commandArgs(trailingOnly = TRUE)
   f <- args[1]
   lipidlist <- args[2]
-  main(f,lipidlist,rtwin=c(0,60),mzwin=c(200,1800))
+  main(f,lipidlist,rtwin=c(20,70),mzwin=c(200,1000))
 }

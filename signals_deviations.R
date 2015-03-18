@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 signals_deviations <- function() { # the csv files must be in the active directory
   require(data.table)
   files <- list.files(".", pattern = "*.csv")
@@ -20,4 +22,8 @@ signals_deviations <- function() { # the csv files must be in the active directo
   write.csv(results[[1]],file="signals.csv", row.names=F)
   write.csv(results[[2]],file="deviations.csv", row.names=F)
   return(results)
+}
+
+if(!interactive()){
+  results <- signals_deviations()
 }

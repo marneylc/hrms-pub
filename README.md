@@ -16,20 +16,20 @@ Usage in R:
 
 To perform analysis for one sample in R, call the following in the console:
 ``` R
-setwd("<path>")
+setwd("path")
 source("hrms.R")
-main(filename,rtwin=c(0,60),mzwin=c(200,1800))
+main(filename,rtwin=c(20,70),mzwin=c(200,1000))
 ```
 
-With <path> being the directory with files hrms.R, LipidList.csv, and mzXML files and where 
+With "path" being the directory with files hrms.R, LipidList.csv, and mzXML files and where 
 rtwin is the retention time window in sec and mzwin is the mzwindow in m/z units
 
 If you want to run this for all data files in a directory run the following command: 
 ``` R
-files = list.files(".", pattern=".mzXML") # the pattern could be ".mzML" if needed
+files = list.files(".", pattern=".mzXML")
 system.time(
 for (i in 1:length(files)) {
-  main(files[i],rtwin=c(0,60),mzwin=c(200,1800))
+  main(files[i],rtwin=c(20,70),mzwin=c(200,1000))
 }
 )
 results <- signals_deviations() 
@@ -50,3 +50,16 @@ spectrum for that target peak. A signal value of "0" means that there is
 mass spectral data collected for the target mass, but that it has a signal
 value of zero.
 
+Note:
+somtimes when edited in windows, hrms.R can end up having invisible CR characters
+which causes errors in linux.
+
+If you get a "No such file or directory" error run the following code in python
+
+``` python
+with open('hrms.R', 'rb+') as f:
+    content = f.read()
+    f.seek(0)
+    f.write(content.replace(b'\r', b''))
+    f.truncate()
+```

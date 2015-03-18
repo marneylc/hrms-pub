@@ -5,7 +5,7 @@ setwd("H:/R/biocrates/msExactiveData/biocrates")
 files = list.files(".", pattern=".mzXML")
 system.time(
   for (i in 1:length(files)) {
-    main(files[i], rtwin=c(0,60), mzwin=c(200,1800))
+    main(files[i], rtwin=c(20,70), mzwin=c(200,1000))
   }
 )
 
