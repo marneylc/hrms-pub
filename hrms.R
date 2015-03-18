@@ -4,24 +4,25 @@
 ### The target list must be in active directory and called LipidList.csv. ###
 ### To call from within R, execute the following two commands ###############
 # > source("hrms.R")
-# > main(filename,rtwin=c(0,60),mzwin=c(200,1800)) 
+# > main(filename,lipidlist,rtwin=c(0,60),mzwin=c(200,1800)) 
 # where rtwin is the retention time window in sec and mzwin is the mzwindow in m/z units
+# lipidlist is the name of the csv file of mz and name pairs
 #
 ### If you want to run this for all data files in a directory run the following command after getting
 ### the name of all files into the list variable "files"
 # > system.time( 
 # > for (i in 1:length(files)) { 
-# >   main(files[i],rtwin=c(0,60),mzwin=c(200,1800))
+# >   main(files[i],lipidlist,rtwin=c(0,60),mzwin=c(200,1800))
 # > }
 # >)
 # > results <- signals_deviations() 
 ### this last line will produce the csv files signals 
 ### and deviations which puts multiple files data together into two csv files plus returns
 ### the data.frames in the list "results"
-main <- function(filename,rtwin,mzwin) {
+main <- function(filename,lipidlist,rtwin,mzwin) {
   require(xcms)
   require(data.table)
-  targets <- read.table("./LipidList.csv" , header=T, sep=',')
+  targets <- read.table(lipidlist, header=T, sep=',')
   targets <- data.table(targets)
   options("nwarnings" = (length(targets$mz)+50)) # we need to get at least as many warnings as targets
   spectrum <- getspectra(filename=filename, rt=rtwin, mz=mzwin)
@@ -173,5 +174,6 @@ peakfind_max <- function(target,spectra,hwidth) {
 if(!interactive()){
   args <- commandArgs(trailingOnly = TRUE)
   f <- args[1]
-  main(f,rtwin=c(0,60),mzwin=c(200,1800))
+  lipidlist <- args[2]
+  main(f,lipidlist,rtwin=c(0,60),mzwin=c(200,1800))
 }
