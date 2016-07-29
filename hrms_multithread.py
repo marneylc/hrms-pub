@@ -20,19 +20,22 @@ copy this file into the active directory with the other files and
 run the following in the command window (shift + right-click will give you
 an option to open a command window from the current explorer directory):
 
-python hrms_multithread.py
+python hrms_multithread.py .mzXML 4
 
-Add watch it fly!
+This will process any .mzXML files using a maximum of 4 cores.
+Watch it fly!
 '''
 import os
 import re
 import shutil
 import threading
 import time
+import sys
 
 def main():
-	mzxmlfiles = pygrep('mzXML','.')
-	maxnumthreads = 4
+    file_ext = sys.argv[1]
+	maxnumthreads = sys.argv[2]
+	mzxmlfiles = pygrep(file_ext,'.')
 	for f in mzxmlfiles:
 		t = R_hrms(f)
 		t.start()
