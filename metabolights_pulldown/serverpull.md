@@ -12,10 +12,6 @@ Name (ftp.ebi.ac.uk:luke): anonymous
 Password: <leave blank>
 ```
 
-```shell
-ftp ftp://ftp.ebi.ac.uk/
-```
-
 Gets you into the ftp server. From which you can look around the studies with corresponding MTBL ID's.
 
 Lets look at MTBLS36: "Metabolic differences in ripening of Solanum lycopersicum 'Alisa Craig' and three monogenic mutants"
@@ -49,11 +45,11 @@ ls | grep mzML
 ls | grep mzXML
 ```
 
-Because this file is already in .mzML format, we don't need to convert it. But we do need to copy the hrms.R script and the lipidlist.csv file into our directory in order to run the hrms code.
+Because this file is already in .mzML format, we don't need to convert it. But we do need to copy the hrms.R script and the lipidlist.csv file into our directory in order to run the hrms code. Be sure you are in your own directory where you downloaded the mass spectral file and run the following.
  
 ```shell
-cp /home/luke/github/hrms/hrms.R ./ # copy the files we need from the github repository
-cp /home/luke/github/hrms/lipidlist.csv ./ # replace the path with your own
+cp /home/luke/github/hrms/hrms.R ./ # copy the files we need from the github repository (replace the path with your own)
+cp /home/luke/github/hrms/lipidlist.csv ./ 
 chmod +x hrms.R # may need to make the hrms.R file executable
 ./hrms.R 20100917_01_TomQC.mzML
 ```
@@ -63,8 +59,9 @@ Take a look at the resulting list of peak heights
 head 20100917_01_TomQC.csv
 ```
 
-I haven't scripted pulling down the entire study yet, and would appreciate that a bunch. There is a way to analyse an entire study with the HRMS code that uses the threading module in python which is already writeen by me and is in the HRMS repository with the file hrms_multithread.py. Also, there is a python library to do this whole FTP transfer via a python interpreter. The problem with running all of this in python is that it may occasionally leave threads open, so in the long run I will need to write an admin script to check for hanging threads.
+I haven't scripted pulling down the entire study yet, and would appreciate that a bunch. There is a way to analyse an entire study with the HRMS code that uses the threading module in python which is already writen by me and is in the HRMS repository with the file hrms_multithread.py. Also, there is a python library to do this whole FTP transfer via a python interpreter. The problem with running all of this in python is that it may occasionally leave threads open, so in the long run I will need to write an admin script to check for hanging threads.
 
+An example of what the process would look like when running HRMS on all .mzML files in a directory using 4 cores:
 ```unix
 cp /home/luke/github/hrms/hrms_multithread.py ./
 python hrms_multithread.py .mzML 4 # to use 4 cores
