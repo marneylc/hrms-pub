@@ -4,7 +4,7 @@ We are going to be using an ftp transfer to pull down entire studies on the meta
 
 There may be another faster option that does some fancy compression and optimizes bandwidth that may be fun to check out (I can't remember the name right now)
 
-'''bash
+'''shell
 ftp ftp://ftp.ebi.ac.uk/
 '''
 
@@ -12,34 +12,34 @@ Gets you into the ftp server. From which you can look around the studies with co
 
 Lets look at MTBLS36: "Metabolic differences in ripening of Solanum lycopersicum 'Alisa Craig' and three monogenic mutants"
 
-'''bash
+'''shell
 (something goes here)
 '''
 
 Pull down a single file:
-'''bash
+'''shell
 
 '''
 
 Open up another terminal or quit your ftp session:
-'''bash
+'''shell
 close
 
 '''
 
 Check if it is .raw or .mzML or .mzXML
-'''bash
+'''shell
 
 '''
 
 The output should look like this:
-'''bash
+'''shell
 
 '''
 Because this file is already in .mzML format, we don't need to convert it. But we do need to copy the hrms.R script and the lipidlist.csv file into our directory in order to run the hrms code.
  
 To run HRMS on this file:
-'''bash
+'''shell
 cp /home/luke/github/hrms/hrms.R ./ # copy the files we need from the github repository
 cp /home/luke/github/hrms/lipidlist.csv ./ # replace the path with your own
 chmod +x hrms.R # may need to make the hrms.R file executable
@@ -47,20 +47,20 @@ chmod +x hrms.R # may need to make the hrms.R file executable
 '''
 
 Take a look at the resulting list of peak heights
-'''bash
+'''shell
 head 20100917_01_TomQC.csv
 '''
 
 I haven't scripted pulling down the entire study yet, and would appreciate that a bunch. There is a way to analyse an entire study with the HRMS code that uses the threading module in python. I've heard that this method may occasionally leave threads open, so in the long run I will need to write an admin script to check for hanging threads.
 
-'''bash
+'''shell
 cp /home/luke/github/hrms/hrms_multithread.py ./
 python hrms_multithread.py .mzML 4 # to use 4 cores
 '''
 
 Then take a look at the signals.csv and deviations.csv files.
 
-'''bash
+'''shell
 head signals.csv
 head deviations.csv
 '''
