@@ -10,7 +10,10 @@ ftp> open ftp.ebi.ac.uk
 Name (ftp.ebi.ac.uk:luke): anonymous
 331 Please specify the password.
 Password: <leave blank>
+'''
 
+'''shell
+ftp ftp://ftp.ebi.ac.uk/
 '''
 
 Gets you into the ftp server. From which you can look around the studies with corresponding MTBL ID's.
@@ -25,6 +28,7 @@ ls
 Look around! The public directory has all the available studies.
 
 To pull down a single file we need a place to put it on our local machine. This is what I did in a separate terminal on my local machine. We are going to get a file from the study labeled MTBLS36:
+
 '''unix
 sudo mkdir /home/luke/data
 sudo mkdir /home/luke/data/MTBLS36
@@ -47,8 +51,7 @@ ls | grep mzXML
 
 Because this file is already in .mzML format, we don't need to convert it. But we do need to copy the hrms.R script and the lipidlist.csv file into our directory in order to run the hrms code.
  
-To run HRMS on this file:
-'''unix
+'''shell
 cp /home/luke/github/hrms/hrms.R ./ # copy the files we need from the github repository
 cp /home/luke/github/hrms/lipidlist.csv ./ # replace the path with your own
 chmod +x hrms.R # may need to make the hrms.R file executable
