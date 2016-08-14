@@ -12,7 +12,7 @@ mzXML files. The code attempts to work with low intensity peaks so
 make sure that proteowizard is not performing any thresholding or peak 
 peaking prior to analysis.
 
-Usage in R:
+**Usage in R:**
 
 To perform analysis for one sample in R, call the following in the console:
 ``` R
@@ -65,7 +65,7 @@ with open('hrms.R', 'rb+') as f:
 
 ```
 
-*For Usage in Terminal and Multithreading with python:*
+**For Usage in Terminal and Multithreading with python:**
 
 For use in multithreading, it is important that the R program Rscript.exe be located in the system path to be called from within python.
 
