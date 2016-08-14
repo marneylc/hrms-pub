@@ -62,4 +62,39 @@ with open('hrms.R', 'rb+') as f:
     f.seek(0)
     f.write(content.replace(b'\r', b''))
     f.truncate()
+
+```
+
+*For Usage in Terminal and Multithreading with python:*
+
+For use in multithreading, it is important that the R program Rscript.exe be located in the system path to be called from within python.
+
+Currently, file conversion to mzXML or mzML is limited to windows environments, advice on this or any code would be greatly appreciated. A python script for this can be found at https://github.com/marneylc/LCMS_highthroughput/blob/master/python/convert_multithread.py . If you already have a clone of LCMS_highthroughput you can call it from within python if the lcms.py file is in your path.
+
+```python
+from lcms import *
+
+maxnumthreads = 8 # to use 8 cores
+rawfiles = pygrep('raw','.')
+for f in rawfiles:
+t = mzXML_conv(f)
+    t.start()
+    while threading.activeCount() > maxnumthreads:
+        time.sleep(0)
+
+```
+
+To run HRMS.R with multithreading run the following from within python::
+
+```python
+from lcms import *
+mzxmlfiles = pygrep('mzXML','.')
+maxnumthreads = 8 # to use 8 cores
+
+for f in mzxmlfiles:
+    t = R_hrms(f)
+    t.start()
+    while threading.activeCount() > maxnumthreads:
+        time.sleep(0)
+
 ```
