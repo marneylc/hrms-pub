@@ -35,20 +35,22 @@ To pull a single sample, and then the whole directory using segmentation (which 
 To transfer one file using 10 segments use something like:
 
 ```unix
-pget -n=10 MTBLS36/20100917_01_TomQC.mzML
+pget -n 10 MTBLS36/20100917_01_TomQC.mzML
 ```
 To transfer the entire directory of files and mirror it to your local machine, but only if a file has an mzML extension we can use something like:
 
 ```unix
-mirror MTBLS36 -p=10 --include-glob=*mzML --use-pget-n=10
+mirror MTBLS36 -P 10 -I *mzML
 ```
 This will take a while, so minimize the terminal and let it run. Alternitively you can set it to run in the background by adding it to a queue, see man page of lftp. Note: If you are restarting the ftp be sure to add the -c option to the mirror call.
 
 ```unix
-queue mirror MTBLS36 -p=10 --include-glob=*mzML --use-pget-n=10
+queue mirror MTBLS36 -P 10 -I *mzML
 jobs
 ```
 Now you should be able to type exit and leave the lftp processing running. Use something like htop or take a peek at the directory to make sure everything is running well. You can attach a process to a terminal, not sure if you would have to do that if the terminal session running it was from a remote connection or not.... hmmmmm
+
+I removed the segmentation code because it seemed to be more difficult for me to get to run properly. 
 
 Because this file is already in .mzML format, we don't need to convert it. But we do need to copy the hrms.R script and the lipidlist.csv file into our directory in order to run the hrms code. Be sure you are in your own directory where you downloaded the mass spectral file and run the following.
  
