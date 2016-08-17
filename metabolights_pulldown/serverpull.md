@@ -24,27 +24,31 @@ ls .
 
 Look around! The public directory has all the available studies.
 
-The tricky thing about ftp is that we need to have matching files on our local machine to tranfser to. With lftp we use the mirror command to populate a directory so we can easily transfer files to the correct locations.
+The tricky thing about ftp is that we need to have matching files on our local machine to tranfser to. With lftp we use the mirror command to populate a directory so we can easily transfer files to the correct locations. It would look simply like this: but lets give it a few more options.
 
 ```unix
 mirror MTBLS36
 ```
 
-Now lets pull in a single sample, and then the whole directory using segmentation (which helps speed the transfer, the only thing faster I think would be peer to peer, which I should set up as a seed once I get the data transfered):
+To pull a single sample, and then the whole directory using segmentation (which helps speed the transfer, the only thing faster I think would be peer to peer, which I should set up as a seed once I get the data transfered):
+
+To transfer one file using 10 segments use something like:
 
 ```unix
-pget -n 10 MTBLS36/20100917_01_TomQC.mzML
+pget -n=10 MTBLS36/20100917_01_TomQC.mzML
 ```
-
-This will transfer one file using 10 segments. To download the entire directory using lftp optimized multithreading and segmentation use:
+To transfer the entire directory of files and mirror it to your local machine, but only if a file has an mzML extension we can use something like:
 
 ```unix
-mirror MTBLS36 -P 10 -i *mzML --use-pget-n=10
+mirror MTBLS36 -p=10 --include-glob=*mzML --use-pget-n=10
 ```
+This will take a while, so minimize the terminal and let it run. Alternitively you can set it to run in the background by adding it to a queue, see man page of lftp. Note: If you are restarting the ftp be sure to add the -c option to the mirror call.
 
-This will transfer the entire directory of files and mirror it to your local machine, but only if a file has an *mzML extension. We are using 10 processes and 10 segments. There is probably a quick experiment to do here to optimize the transfer.
-
-This will take a while. The file is rather large. Get a cup of coffee and come back. Any input about speeding up this process will be gladly appreciated!
+```unix
+queue mirror MTBLS36 -p=10 --include-glob=*mzML --use-pget-n=10
+jobs
+```
+Now you should be able to type exit and leave the lftp processing running. Use something like htop or take a peek at the directory to make sure everything is running well. You can attach a process to a terminal, not sure if you would have to do that if the terminal session running it was from a remote connection or not.... hmmmmm
 
 Because this file is already in .mzML format, we don't need to convert it. But we do need to copy the hrms.R script and the lipidlist.csv file into our directory in order to run the hrms code. Be sure you are in your own directory where you downloaded the mass spectral file and run the following.
  
