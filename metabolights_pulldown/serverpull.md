@@ -5,8 +5,9 @@ We are going to be using an ftp transfer to pull down entire studies on the meta
 There may be another faster option that does some fancy compression and optimizes bandwidth that may be fun to check out (I can't remember the name right now)
 
 ```unix
-~$ sudo ftp 
-ftp> open ftp.ebi.ac.uk
+~$ sudo lftp 
+lftp> open ftp.ebi.ac.uk
+# it may prompt for username and password
 Name (ftp.ebi.ac.uk:luke): anonymous
 331 Please specify the password.
 Password: <leave blank>
@@ -18,32 +19,32 @@ Lets look at MTBLS36: "Metabolic differences in ripening of Solanum lycopersicum
 
 ```unix
 cd /pub/databases/metabolights/studies/public/
-ls
+ls .
 ```
 
 Look around! The public directory has all the available studies.
 
-To pull down a single file we need a place to put it on our local machine. This is what I did in a separate terminal on my local machine. We are going to get a file from the study labeled MTBLS36:
+The tricky thing about ftp is that we need to have matching files on our local machine to tranfser to. With lftp we use the mirror command to populate a directory so we can easily transfer files to the correct locations.
 
 ```unix
-sudo mkdir /home/luke/data
-sudo mkdir /home/luke/data/MTBLS36
-sudo touch /home/luke/data/MTBLS36/20100917_01_TomQC.mzML
+mirror MTBLS36
 ```
 
-Back in your ftp session:
+Now lets pull in a single sample, and then the whole directory using segmentation (which helps speed the transfer, the only thing faster I think would be peer to peer, which I should set up as a seed once I get the data transfered):
+
 ```unix
-get ./MTBLS36/20100917_01_TomQC.mzML /home/luke/data/MTBLS36/20100917_01_TomQC.mzML
+pget -n 10 MTBLS36/20100917_01_TomQC.mzML
 ```
+
+This will transfer one file using 10 segments. To download the entire directory using lftp optimized multithreading and segmentation use:
+
+```unix
+mirror MTBLS36 -P 10 -i *mzML --use-pget-n=10
+```
+
+This will transfer the entire directory of files and mirror it to your local machine, but only if a file has an *mzML extension. We are using 10 processes and 10 segments. There is probably a quick experiment to do here to optimize the transfer.
 
 This will take a while. The file is rather large. Get a cup of coffee and come back. Any input about speeding up this process will be gladly appreciated!
-
-Check if it is .raw or .mzML or .mzXML
-```unix
-ls | grep raw
-ls | grep mzML
-ls | grep mzXML
-```
 
 Because this file is already in .mzML format, we don't need to convert it. But we do need to copy the hrms.R script and the lipidlist.csv file into our directory in order to run the hrms code. Be sure you are in your own directory where you downloaded the mass spectral file and run the following.
  
