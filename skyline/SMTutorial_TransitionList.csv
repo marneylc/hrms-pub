@@ -1,0 +1,22 @@
+Molecule List Name,Precursor Name,Precursor Formula,Precursor Charge,Precursor RT,Precursor CE,Product m/z,Product Charge
+Amino Acid,Methionine,C5H12NO2S,1,2.5,15,104.07,1
+Amino Acid,d3-Methionine,C5H9H'3NO2S,1,2.5,15,107.09,1
+Amino Acid,Isoleucine,C6H14NO2,1,3.05,15,86.096,1
+Amino Acid,Leucine,C6H14NO2,1,3.13,15,86.096,1
+Amino Acid,d3-leucine,C6H11H'3NO2,1,3.13,15,89.1,1
+Amino Acid,Phenylalanine,C9H12NO2,1,3.27,15,120.08,1
+Amino Acid,13C6-Phenylalanine,C3C'6H12NO2,1,3.27,15,126.11,1
+Amino Acid,Arginine,C6H15N4O2,1,2.01,15,116.07,1
+Amino Acid,13C5-Arginine,C1C'5H15N4O2,1,2.01,15,121.11,1
+Amino Acid,Ornithine,C5H13N2O2,1,1.1,15,70.07,1
+Amino Acid,Ornithine,C5H13N2O2,1,1.1,15,116.07,1
+Amino Acid,d2-ornithine,C5H11H'2N2O2,1,1.1,15,72.07,1
+Amino Acid,d2-ornithine,C5H11H'2N2O2,1,1.1,15,118.07,1
+Organic Acid,creatine,C4H10N3O2,1,1.1,15,90.06,1
+Organic Acid,d3-creatine,C4H7H'3N3O2,1,1.1,15,93.06,1
+5'-methylthioadenosine,MTA,C11H16N5O3S,1,3.4,15,136.1,1
+5'-methylthioadenosine,d3-MTA,C11H13H'3N5O3S,1,3.4,15,136.1,1
+S-adenosyl methionine,SAM,C15H23N6O5S,1,3,15,250.11,1
+S-Adenosyl homocysteine,SAH,C14H21N6O5S,1,3,15,136.08,1
+Polyamine,Spermidine,C7H20N3,1,3.59,15,129.15,1
+Polyamine,Spermine,C10H27N4,1,3.82,15,112.112,1
